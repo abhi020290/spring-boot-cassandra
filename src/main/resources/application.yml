@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: spring-boot-cassandra
+
+cassandra:
+  contactpoints: 127.0.0.1
+  keyspace: sample_keyspace
+  username: admin
+  password: password
+  port: 9042
+  timedelay: 5000
+
