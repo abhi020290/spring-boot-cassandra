@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.cassandra.SessionFactory;
-import org.springframework.data.cassandra.config.CassandraEntityClassScanner;
 import org.springframework.data.cassandra.config.CqlSessionFactoryBean;
 import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.config.SessionFactoryFactoryBean;
@@ -24,20 +22,23 @@ import org.springframework.data.cassandra.repository.config.EnableCassandraRepos
 @EntityScan("com.springbootcassandra.springbootcassandra.entity")
 public class CassandraConfig {
 
-    @Value("${cassandra.username}")
+    @Value("${spring.data.cassandra.username}")
     private String userName;
 
-    @Value("${cassandra.password}")
+    @Value("${spring.data.cassandra.password}")
     private String password;
 
-    @Value("${cassandra.keyspace}")
+    @Value("${spring.data.cassandra.keyspace-name}")
     private String keySpace;
 
-    @Value("${cassandra.contactpoints}")
+    @Value("${spring.data.cassandra.contact-points}")
     private String contactPoints;
 
-    @Value("${cassandra.port}")
-    private String port;
+    @Value("${spring.data.cassandra.port}")
+    private int port;
+
+    @Value("${spring.data.cassandra.local-datacenter}")
+    private String dataCenter;
 
     @Bean
     public CqlSessionFactoryBean session() {
@@ -45,7 +46,7 @@ public class CassandraConfig {
         CqlSessionFactoryBean session = new CqlSessionFactoryBean();
         session.setContactPoints(contactPoints);
         session.setKeyspaceName(keySpace);
-        session.setLocalDatacenter("datacenter1");
+        session.setLocalDatacenter(dataCenter);
         return session;
     }
 
